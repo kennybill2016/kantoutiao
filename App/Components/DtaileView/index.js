@@ -14,17 +14,13 @@ import {
 import API from '../../NetWork/api'
 import Loading from '../Loading';
 import HTMLView from 'react-native-htmlview'
-var WeChat=require('react-native-wechat');
+
 
 const {width, height} = Dimensions.get('window');
-
-var actionSheets = ['微信朋友','微信朋友圈','微信收藏','取消']
-var CANCEL_INDEX = 3;
 
 export default class DetailView extends Component {
     constructor(props){
         super(props);
-        WeChat.registerApp('wx8d560da3ba038e7e')
         this.state = {
             title:null,
             content:null,
@@ -41,64 +37,6 @@ export default class DetailView extends Component {
         this._onFetch(url)
     }
 
-shareToTimeline() {
-  WeChat.isWXAppInstalled()
-  .then((isInstalled) => {
-    if (isInstalled) {
-      WeChat.shareToTimeline({
-        title:'发送给：',
-        description: this.title,
-        thumbImage: '',
-        type: 'news',
-        webpageUrl: this.openurl
-      })
-      .catch((error) => {
-        ToastShort(error.message);
-      });
-    } else {
-      ToastShort('没有安装微信软件，请您安装微信之后再试');
-    }
-  });
- }
-
-shareToSession() {
-   WeChat.isWXAppInstalled()
-    .then((isInstalled) => {
-      if (isInstalled) {
-        WeChat.shareToSession({
-          title:'微信好友测试链接',
-          description: this.title,
-          thumbImage: '',
-          type: 'news',
-          webpageUrl: this.openurl
-        })
-        .catch((error) => {
-          ToastShort(error.message);
-        });
-      } else {
-        ToastShort('没有安装微信软件，请您安装微信之后再试');
-      }
-    });
- }
- //显示ActionSheet
-  showActionSheet() {
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: actionSheets,
-      cancelButtonIndex: CANCEL_INDEX,
-      tintColor: 'blue',
-    },
-    (buttonIndex) => {
-        if(buttonIndex==0) {
-            () => {this.shareToSession();}
-        }
-        else if(buttonIndex==1) {
-            () => {this.shareToTimeline();}
-        }
-        else if(buttonIndex==2) {
-            () => {this.shareToSession();}
-        }
-    });
-  }
     _onFetch(url){
         fetch(url)
             .then(response => response.json())

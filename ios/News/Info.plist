@@ -23,7 +23,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>wechat</string>
-		<string>wexin</string>
+		<string>weixin</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

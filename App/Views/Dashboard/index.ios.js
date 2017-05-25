@@ -13,10 +13,12 @@ import RefreshListView from '../../Components/RefreshableListView/index'
 import ScrollableNavBar from '../../Components/ScrollableTab/index'
 import Me from './Me';
 import Star from './Star'
+var WeChat=require('react-native-wechat');
 
 export default class Dashboard extends Component {
     constructor(props){
         super(props);
+        WeChat.registerApp('wx21d1824bca8245df')
         this.state = {
             selectTab:'comment'
         }
