@@ -30,6 +30,7 @@
 		8DC842725217418495783116 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6073644CB79E4026A330D0E5 /* Ionicons.ttf */; };
 		981446A58AE64E3AA47A4185 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CC7F13260A243FD80F3B037 /* Octicons.ttf */; };
 		A2AB6F6C47104F4196327026 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20831212A6DF4D00A61CE4FF /* FontAwesome.ttf */; };
+		A76522ED1ED5BEBE0014D9D1 /* libRCTWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A76522EC1ED5BE900014D9D1 /* libRCTWeChat.a */; };
 		A7E5DEE61ED59B7700AEF996 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E5DEE51ED59B7700AEF996 /* SystemConfiguration.framework */; };
 		A7E5DF0E1ED59B7E00AEF996 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E5DF0D1ED59B7E00AEF996 /* CoreTelephony.framework */; };
 		A7E5DF121ED59B8F00AEF996 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A7E5DF111ED59B8F00AEF996 /* libsqlite3.0.tbd */; };
@@ -180,6 +181,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		A76522EB1ED5BE900014D9D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A76522E71ED5BE900014D9D1 /* RCTWeChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 86D238421BD0BB9E00C75D01;
+			remoteInfo = RCTWeChat;
+		};
 		A7E5DF001ED59B7700AEF996 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -251,6 +259,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		90A0B8C267E140D082B57B0E /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		967F21A6B5E64704B8410D6E /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		A76522E71ED5BE900014D9D1 /* RCTWeChat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWeChat.xcodeproj; path = "../../../../../../usr/local/lib/node_modules/react-native-wechat/ios/RCTWeChat.xcodeproj"; sourceTree = "<group>"; };
 		A7E5DEE51ED59B7700AEF996 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		A7E5DF0D1ED59B7E00AEF996 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		A7E5DF0F1ED59B8600AEF996 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -268,6 +277,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A76522ED1ED5BEBE0014D9D1 /* libRCTWeChat.a in Frameworks */,
 				A7E5DF161ED59BA300AEF996 /* libz.tbd in Frameworks */,
 				A7E5DF141ED59B9E00AEF996 /* libc++.tbd in Frameworks */,
 				A7E5DF121ED59B8F00AEF996 /* libsqlite3.0.tbd in Frameworks */,
@@ -409,6 +419,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A76522E71ED5BE900014D9D1 /* RCTWeChat.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -469,6 +480,14 @@
 				967F21A6B5E64704B8410D6E /* Zocial.ttf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		A76522E81ED5BE900014D9D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A76522EC1ED5BE900014D9D1 /* libRCTWeChat.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		A7E5DEE41ED59B7600AEF996 /* Frameworks */ = {
@@ -570,6 +589,10 @@
 				{
 					ProductGroup = 139FDEE71B06529A00C62182 /* Products */;
 					ProjectRef = 139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */;
+				},
+				{
+					ProductGroup = A76522E81ED5BE900014D9D1 /* Products */;
+					ProjectRef = A76522E71ED5BE900014D9D1 /* RCTWeChat.xcodeproj */;
 				},
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
@@ -728,6 +751,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		A76522EC1ED5BE900014D9D1 /* libRCTWeChat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTWeChat.a;
+			remoteRef = A76522EB1ED5BE900014D9D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		A7E5DF011ED59B7700AEF996 /* libyoga.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -842,6 +872,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 24SE6ECXX7;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS",
+				);
 				INFOPLIST_FILE = News/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -861,6 +899,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 24SE6ECXX7;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/react-native/ReactCommon/**",
+					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-wechat/ios",
+					"$(SRCROOT)/../node_modules/react-native/Libraries/LinkingIOS",
+				);
 				INFOPLIST_FILE = News/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (

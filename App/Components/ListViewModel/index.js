@@ -22,6 +22,8 @@ export default class HomeListViewModel extends Component {
         this.props.navigator.push({
             component:DetailView,
             title:'',
+            rightButtonTitle: '分享',
+            onRightButtonPress: DetailView.prototype.showActionSheet,
             rowData:{params:this.props.rowData}
         })
     }
