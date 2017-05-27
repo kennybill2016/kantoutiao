@@ -63,9 +63,10 @@ export default class MyScrollableTabView extends Component {
            >
                {
                    data.map((item,index) => {
+                      var requestUrl = API.HOME_PAGE.format(dataType[index],"","0","1");
                        return (
                            <View key={index} tabLabel={data[index]} >
-                                   <RefreshListView index={index} url={this.state.url} ctype={dataType[index]} navigator={this.props.navigator} />
+                                   <RefreshListView index={index} url={requestUrl} ctype={dataType[index]} navigator={this.props.navigator} />
                            </View>
                        )
                    })

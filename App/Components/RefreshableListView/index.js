@@ -100,81 +100,13 @@ export default class RefreshableListView extends Component {
     _onRefresh(PullRefresh,page){
         var url = API.HOME_PAGE.format(this.props.ctype,this.state.max_time,"","2");
         console.log(url)
-        var _this=this;
-        var _pullRefresh = PullRefresh;
-        fetch(url)
-            .then((response)=> response.json())
-            .then(json => {
-//              console.log(json)
-                let data = json.data.data.concat(this.state.data)
-                var min_time = json.data.min_time
-                var max_time = json.data.max_time
-                this.setState({
-                    data:data,
-                    dataSource:this.state.dataSource.cloneWithRows(data),
-                    min_time:min_time,
-                    max_time:max_time,
-                });
-
-                if(this._listView&&json.data.data.length<8) {
-                  this._listView.onLoadMoreEnd();
-                }
-               setTimeout(()=>{
-                    this.setState({
-                        loadfailed:false,
-                        loaded:true,
-                    });
-                },500);
-            })
-            .catch((error)=>{
-                console.log(error)
-                setTimeout(()=>{
-                    this.setState({
-                        loadfailed:true,
-                        loaded:true,
-                    });
-                },500);
-            });
+        this._onFetch(url);
     }
 
-    //请求网络数据将加载更多数据状态改为已加载完成
     onLoadMore(PullRefresh){      
         var url = API.HOME_PAGE.format(this.props.ctype,"",this.state.min_time,"2");
         console.log(url)
-        var _this=this;
-        var _pullRefresh = PullRefresh;
-        fetch(url)
-            .then((response)=> response.json())
-            .then(json => {
-//              console.log(json)
-                let data = this.state.data.concat(json.data.data)
-                var min_time = json.data.min_time
-                var max_time = json.data.max_time
-                this.setState({
-                    data:data,
-                    dataSource:this.state.dataSource.cloneWithRows(data),
-                    min_time:min_time,
-                    max_time:max_time,
-                });
-                if(this._listView&&json.data.data.length<8) {
-                    this._listView.onLoadMoreEnd();
-                }
-                setTimeout(()=>{
-                    this.setState({
-                        loadfailed:false,
-                        loaded:true,
-                    });
-                },500); 
-            })
-            .catch((error)=>{
-                console.log(error)
-                setTimeout(()=>{
-                    this.setState({
-                        loadfailed:true,
-                        loaded:true,
-                    });
-                },500);
-            });
+        this._onFetch(url);
     } 
 
     render(){
