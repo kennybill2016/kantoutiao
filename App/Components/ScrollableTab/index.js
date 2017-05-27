@@ -13,8 +13,9 @@ import API from '../../NetWork/api'
 export default class MyScrollableTabView extends Component {
     constructor(props){
         super(props);
+        var url = API.HOME_PAGE.format("2","","0","1");
         this.state = {
-            url: ''
+            url:url
         }
     }
 
@@ -39,7 +40,7 @@ export default class MyScrollableTabView extends Component {
                tabBarInactiveTextColor='#000516'
                tabBarTextStyle={{fontSize: 18}}
                onChangeTab={(obj) =>{
-                    var requestUrl = API.HOME_PAGE+dataType[obj.i]
+                    var requestUrl = API.HOME_PAGE.format(dataType[obj.i],"","0","1");
                     switch (obj.i){
                         case 0:
                             this._onChangeURL(requestUrl)
@@ -64,7 +65,7 @@ export default class MyScrollableTabView extends Component {
                    data.map((item,index) => {
                        return (
                            <View key={index} tabLabel={data[index]} >
-                                   <RefreshListView index={index} url={this.state.url} navigator={this.props.navigator} />
+                                   <RefreshListView index={index} url={this.state.url} ctype={dataType[index]} navigator={this.props.navigator} />
                            </View>
                        )
                    })

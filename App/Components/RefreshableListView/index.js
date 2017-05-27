@@ -6,7 +6,8 @@ import {
     Text, View,
     TabBarIOS,
     ListView,
-    NavigatorIOS
+    NavigatorIOS,
+    TouchableOpacity,
 } from 'react-native';
 
 import PullRefresh from 'react-native-pullrefresh-scrollview';
@@ -14,6 +15,7 @@ import HomePageList from '../ListViewModel';
 import RecreationItem from '../ListViewModel/recreation'
 import API from '../../NetWork/api'
 import Loading from '../Loading'
+import Loadfailed from '../Loadfailed'
 
 export default class RefreshableListView extends Component {
     constructor(props){
@@ -21,13 +23,20 @@ export default class RefreshableListView extends Component {
         this.state = {
             dataSource:new ListView.DataSource({rowHasChanged: (r1,r2) => r1 !== r2}),
             data:[],
-            page:0
-
+            max_time:null,
+            min_time:null,
+            _listView:null,
+            loadfailed:false,
+            loaded:false,
         }
     }
 
     componentWillMount(){
-        this._onFetch();
+        this.setState({
+            loadfailed:false,
+            loaded:false,
+        })
+        this._onFetch(this.props.url);
     }
     componentWillReceiveProps(props){
         if(this.props.url !== props.url){
@@ -35,25 +44,38 @@ export default class RefreshableListView extends Component {
         }
     }
 
-    _onFetch(url=API.HOME_PAGE_DEFAULT){
+    _onFetch(url){
         fetch(url)
             .then((response)=> response.json())
             .then(json => {
                 console.log(json)
-                let data;
-                 if(this.props.index !== -1){
-                     data = json.data.data;
-                 }else {
-                     data = json.data.data;
-                 }
+                let data = json.data.data;
+                 var min_time = json.data.min_time
+                 var max_time = json.data.max_time
                 this.setState({
                     data:this.state.data.concat(data),
-                    dataSource:this.state.dataSource.cloneWithRows(data)
+                    dataSource:this.state.dataSource.cloneWithRows(data),
+                    min_time:min_time,
+                    max_time:max_time,
                 });
-
+                if(this._listView&&json.data.data.length<8) {
+                  this._listView.onLoadMoreEnd();
+                }
+                setTimeout(()=>{
+                    this.setState({
+                        loadfailed:false,
+                        loaded:true,
+                    });
+                },500);
             })
             .catch((error)=>{
                 console.log(error)
+                setTimeout(()=>{
+                    this.setState({
+                        loadfailed:true,
+                        loaded:true,
+                    });
+                },500);
             });
     }
 
@@ -69,50 +91,144 @@ export default class RefreshableListView extends Component {
         }
     }
 
-    _onRefresh(PullRefresh,page){
-        if(this.props.index !==-1){
-            setTimeout(()=>{
-                PullRefresh.onRefreshEnd()
-            },2000);
-        }else {
-            var url = API.RECREATION.replace(/offset=0/,'offset='+page)
-            fetch(url)
-                .then((response)=> response.json())
-                .then(json => {
-                    let data;
-                    if(this.props.index !== -1){
-                        data = json.data.data;
-                    }else {
-                        data = json.data.data;
-                    }
-                    data = data.concat(this.state.data);
-                    this.setState({
-                        page:this.state.page+1,
-                        data:data,
-                        dataSource:this.state.dataSource.cloneWithRows(data)
-                    });
-                    PullRefresh.onRefreshEnd()
-                })
-                .catch((error)=>{
-                    console.log(error)
-                });
-        }
+    _onRetray(){
+        console.log('retray....')
+        var url = API.HOME_PAGE.format(this.props.ctype,this.state.max_time,"","2");
+        this._onFetch(url);
     }
+
+    _onRefresh(PullRefresh,page){
+        var url = API.HOME_PAGE.format(this.props.ctype,this.state.max_time,"","2");
+        console.log(url)
+        var _this=this;
+        var _pullRefresh = PullRefresh;
+        fetch(url)
+            .then((response)=> response.json())
+            .then(json => {
+//              console.log(json)
+                let data = json.data.data.concat(this.state.data)
+                var min_time = json.data.min_time
+                var max_time = json.data.max_time
+                this.setState({
+                    data:data,
+                    dataSource:this.state.dataSource.cloneWithRows(data),
+                    min_time:min_time,
+                    max_time:max_time,
+                });
+
+                if(this._listView&&json.data.data.length<8) {
+                  this._listView.onLoadMoreEnd();
+                }
+               setTimeout(()=>{
+                    this.setState({
+                        loadfailed:false,
+                        loaded:true,
+                    });
+                },500);
+            })
+            .catch((error)=>{
+                console.log(error)
+                setTimeout(()=>{
+                    this.setState({
+                        loadfailed:true,
+                        loaded:true,
+                    });
+                },500);
+            });
+    }
+
+    //请求网络数据将加载更多数据状态改为已加载完成
+    onLoadMore(PullRefresh){      
+        var url = API.HOME_PAGE.format(this.props.ctype,"",this.state.min_time,"2");
+        console.log(url)
+        var _this=this;
+        var _pullRefresh = PullRefresh;
+        fetch(url)
+            .then((response)=> response.json())
+            .then(json => {
+//              console.log(json)
+                let data = this.state.data.concat(json.data.data)
+                var min_time = json.data.min_time
+                var max_time = json.data.max_time
+                this.setState({
+                    data:data,
+                    dataSource:this.state.dataSource.cloneWithRows(data),
+                    min_time:min_time,
+                    max_time:max_time,
+                });
+                if(this._listView&&json.data.data.length<8) {
+                    this._listView.onLoadMoreEnd();
+                }
+                setTimeout(()=>{
+                    this.setState({
+                        loadfailed:false,
+                        loaded:true,
+                    });
+                },500); 
+            })
+            .catch((error)=>{
+                console.log(error)
+                setTimeout(()=>{
+                    this.setState({
+                        loadfailed:true,
+                        loaded:true,
+                    });
+                },500);
+            });
+    } 
 
     render(){
-        return (
-        this.state.dataSource?
-            <ListView
-                renderScrollComponent={(props) =>
-                <PullRefresh
-                onRefresh={(PullRefresh)=>this._onRefresh(PullRefresh,this.state.page)} {...props} />}
-                dataSource={this.state.dataSource}
-                renderRow={this._renderRow.bind(this)}
-            />:
-            <Loading />
-        )
+            if(this.state.data.length>0) {
+                return(
+                    <ListView
+                        enableEmptySections={true}
+                        renderScrollComponent={(props) =>
+                        <PullRefresh
+                        ref={(c) => this._listView = c}
+                        onRefresh={(PullRefresh)=>this._onRefresh(PullRefresh,this.state.page)} onLoadMore={(PullRefresh)=>this.onLoadMore(PullRefresh)} useLoadMore={1}{...props} />}
+                        dataSource={this.state.dataSource}
+                        renderRow={this._renderRow.bind(this)}
+                    />)
+            }
+             else if(this.state.loaded && this.state.data.length==0) {
+                return(
+                    <TouchableOpacity onPress={() => this._onRetray()}>
+                        <View style={styles.container}>
+                            <Text style={styles.title} >
+                                获取数据为空！
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                )
+            }
+            else if(this.state.loadfailed) {
+                return(
+                    <TouchableOpacity onPress={() => this._onRetray()}>
+                        <View style={styles.container}>
+                            <Text style={styles.title} >
+                                网络不给力，点击屏幕重试
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                )
+            }
+            else {
+                return(<Loading />)
+            }
     }
-
-
 }
+
+var styles = StyleSheet.create({
+    container:{
+      marginTop:64,
+      justifyContent: 'center',
+    },
+    title: {
+        fontSize: 16,
+        textAlign: 'center',
+        color: 'black',
+        justifyContent: 'center',
+    },
+
+});
 
