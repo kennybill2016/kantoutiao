@@ -9,11 +9,17 @@ import {
 import ScrollableTabView, { ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import RefreshListView from '../RefreshableListView'
 import API from '../../NetWork/api'
+import DeviceInfo from 'react-native-device-info'
 
 export default class MyScrollableTabView extends Component {
     constructor(props){
         super(props);
-        var url = API.HOME_PAGE.format("2","","0","1");
+        var deviceId = DeviceInfo.getUniqueID().toLowerCase();
+        deviceId = deviceId.replace('-','');
+        deviceId = deviceId.replace('-','');
+        deviceId = deviceId.replace('-','');
+        deviceId = deviceId.replace('-','');
+        var url = API.HOME_PAGE.format("2","","0","1",deviceId);
         this.state = {
             url:url
         }
@@ -40,7 +46,12 @@ export default class MyScrollableTabView extends Component {
                tabBarInactiveTextColor='#000516'
                tabBarTextStyle={{fontSize: 18}}
                onChangeTab={(obj) =>{
-                    var requestUrl = API.HOME_PAGE.format(dataType[obj.i],"","0","1");
+                    var deviceId = DeviceInfo.getUniqueID().toLowerCase();
+                    deviceId = deviceId.replace('-','');
+                    deviceId = deviceId.replace('-','');
+                    deviceId = deviceId.replace('-','');
+                    deviceId = deviceId.replace('-','');
+                    var requestUrl = API.HOME_PAGE.format(dataType[obj.i],"","0","1",deviceId);
                     switch (obj.i){
                         case 0:
                             this._onChangeURL(requestUrl)
@@ -56,14 +67,15 @@ export default class MyScrollableTabView extends Component {
                             break;
                     }
                }}
-        //       onScroll={(postion) => {
-        //  // float类型 [0, tab数量-1]    滑动时触发
-        //  console.log('scroll position:' + postion);
-        //}}
            >
                {
                    data.map((item,index) => {
-                      var requestUrl = API.HOME_PAGE.format(dataType[index],"","0","1");
+                      var deviceId = DeviceInfo.getUniqueID().toLowerCase();
+                      deviceId = deviceId.replace('-','');
+                      deviceId = deviceId.replace('-','');
+                      deviceId = deviceId.replace('-','');
+                      deviceId = deviceId.replace('-','');
+                      var requestUrl = API.HOME_PAGE.format(dataType[index],"","0","1",deviceId);
                        return (
                            <View key={index} tabLabel={data[index]} >
                                    <RefreshListView index={index} url={requestUrl} ctype={dataType[index]} navigator={this.props.navigator} />
